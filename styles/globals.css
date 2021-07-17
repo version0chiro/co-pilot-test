@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* make images round */
+.img {
+  border: 10;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}

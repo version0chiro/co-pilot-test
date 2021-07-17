@@ -5,10 +5,26 @@ import styles from "../styles/Home.module.css";
 // importing useState and useEffect
 import { useState } from "react";
 
+//getStatic props
+export async function getStaticProps() {
+  const randomImageUrlJSON = await fetch(
+    "http://localhost:3000/api/imageExtractor"
+  )
+    .then((res) => res.json())
+    .then((res: any) => {
+      return res.image;
+    });
 
+  return {
+    props: {
+      randomImageUrlJSON,
+    },
+  };
+}
 
-export default function Home() {
+export default function Home({ randomImageUrlJSON }: any) {
   const [counter, setCounter] = useState(0);
+  const [randomImageUrl, setRandomImageUrl] = useState(randomImageUrlJSON);
   return (
     <div className={styles.container}>
       <Head>
@@ -21,6 +37,29 @@ export default function Home() {
       {/* Display counter */}
       <p>You have clicked me {counter} times.</p>
 
+      {/* Button with arrow function */}
+      <button
+        onClick={async () => {
+          setRandomImageUrl("/vercel.svg");
+          const urlNew = await fetch("/api/imageExtractor")
+            .then((res) => res.json())
+            .then((res) => res.image);
+
+          setRandomImageUrl(urlNew);
+          console.log(randomImageUrl);
+        }}
+      >
+        {" "}
+        Something{" "}
+      </button>
+      {/* Image component */}
+      <Image
+        className={styles.img}
+        src={randomImageUrl}
+        height={144}
+        width={144}
+        alt="random image"
+      />
     </div>
   );
 }

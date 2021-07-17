@@ -1,7 +1,14 @@
-export default function imageExtractor() {
+// import next api respon and request
+import type { NextApiRequest, NextApiResponse } from "next";
+
+export default function imageExtractor(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   // retrive random image from the internet
-  const img = new Image();
-  img.src = "https://pbs.twimg.com/media/C-xSX-WUAAQQ4XE.jpg";
+
+  const url = "https://picsum.photos/200/300/?random";
+
   // return the image as a canvas
-  return img;
+  res.status(200).json({ image: url });
 }
